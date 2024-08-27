@@ -1,0 +1,13 @@
+# Fragment specific to C header files
+CompileFlags:
+  Add: [
+        -std=c17,
+        -Wall,
+        -Wextra,
+        -Wpedantic
+      ]
+
+  Remove: [
+        -std=c++20,
+        Objective-C++
+  ]
