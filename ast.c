@@ -1,6 +1,6 @@
 #include "ast.h"
 
-void print_exp_helper(exp* exp)
+void print_exp_helper(Exp* exp)
 {
   if (exp == NULL) {
     printf("NULL\n");
@@ -50,7 +50,7 @@ void print_exp_helper(exp* exp)
   }
 }
 
-void print_exp(exp* exp)
+void print_exp(Exp* exp)
 {
   print_exp_helper(exp);
   printf("\n");

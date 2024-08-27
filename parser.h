@@ -27,7 +27,7 @@ typedef struct
 
 typedef struct
 {
-  exp* res;
+  Exp* res;
   token* leftover;
 } parsedTree;
 
@@ -38,6 +38,6 @@ parsedTree parse_term(Arena a, token* tks);
 parsedTree parse_app(Arena a, token* tks);
 parsedTree parse_abs(Arena a, token* tks);
 
-exp* parse(Arena a, token* tks);
+Exp* parse(Arena a, token* tks);
 
 #endif

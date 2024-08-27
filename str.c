@@ -43,6 +43,8 @@ string str_from_integer(Arena a, int x)
 
   if (x < 0) {
     str[0] = '-';
+  } else if (x == 0) {
+    str[0] = '0';
   }
 
   for (int i = 0; x != 0; (x /= 10, ++i)) {

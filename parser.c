@@ -14,8 +14,8 @@ parsedTree parse_term(Arena a, token* tks)
 {
   assert(tks);
   Variable var = parse_var(a, tks);
-  exp* res = arena_zalloc(a, exp, 1);
-  *res = (exp){.type = exp_VAR, .toVar = var};
+  Exp* res = arena_zalloc(a, Exp, 1);
+  *res = (Exp){.type = exp_VAR, .toVar = var};
   return (parsedTree){.res = res, .leftover = tks->nxt};
 }
 
@@ -42,7 +42,7 @@ parsedTree parse_abs(Arena a, token* tks)
 {
   assert(tks);
 
-  exp* res = arena_zalloc(a, exp, 1);
+  Exp* res = arena_zalloc(a, Exp, 1);
   res->type = exp_ABS;
   res->toAbs.var = parse_var(a, tks);
 
@@ -89,7 +89,7 @@ parsedTree parse_app(Arena a, token* tks)
     return parsed_exp1;
   }
 
-  exp* res = arena_zalloc(a, exp, 1);
+  Exp* res = arena_zalloc(a, Exp, 1);
   res->type = exp_APP;
 
   parsedTree parsed_exp2 = parse_exp(a, parsed_exp1.leftover);
@@ -97,8 +97,8 @@ parsedTree parse_app(Arena a, token* tks)
   res->toApp = (Application){.exp1 = parsed_exp1.res, .exp2 = parsed_exp2.res};
 
   while (parsed_exp2.leftover && parsed_exp2.leftover->type != tok_RPAREN) {
-    exp* tmp = res;
-    res = arena_zalloc(a, exp, 1);
+    Exp* tmp = res;
+    res = arena_zalloc(a, Exp, 1);
     res->type = exp_APP;
     res->toApp.exp1 = tmp;
     parsed_exp2 = parse_exp(a, parsed_exp2.leftover);
@@ -108,7 +108,7 @@ parsedTree parse_app(Arena a, token* tks)
   return (parsedTree){.res = res, .leftover = parsed_exp2.leftover};
 }
 
-exp* parse(Arena a, token* tks)
+Exp* parse(Arena a, token* tks)
 {
   parsedTree res = parse_app(a, tks);
   assert(res.leftover == NULL);

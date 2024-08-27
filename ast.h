@@ -3,7 +3,7 @@
 
 #include "str.h"
 
-typedef struct exp exp;
+typedef struct Exp Exp;
 
 typedef struct
 {
@@ -13,16 +13,16 @@ typedef struct
 typedef struct
 {
   Variable var;
-  exp* exp;
+  Exp* exp;
 } Abstraction;
 
 typedef struct
 {
-  exp* exp1;
-  exp* exp2;
+  Exp* exp1;
+  Exp* exp2;
 } Application;
 
-struct exp
+struct Exp
 {
   enum {
     exp_NULL = 0,
@@ -39,7 +39,7 @@ struct exp
   };
 };
 
-void print_exp_helper(exp* exp);
-void print_exp(exp* exp);
+void print_exp_helper(Exp* exp);
+void print_exp(Exp* exp);
 
 #endif
