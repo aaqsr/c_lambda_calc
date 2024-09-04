@@ -68,3 +68,61 @@ void print_exp(Exp* exp)
   print_exp_helper(exp, false, 0);
   printf("\n");
 }
+
+Variable deep_clone_var(Arena a, Variable v)
+{
+  return (Variable){.str = const_str(str_copy(a, v.str))};
+}
+
+Abstraction deep_clone_abs(Arena a, Abstraction abs)
+{
+  Exp* clone = arena_zalloc(a, Exp, 1);
+  *clone = deep_clone_exp(a, abs.exp);
+  return (Abstraction){.var = deep_clone_var(a, abs.var), .exp = clone};
+}
+
+Application deep_clone_app(Arena a, Application app)
+{
+  Exp* clone1 = arena_zalloc(a, Exp, 1);
+  *clone1 = deep_clone_exp(a, app.exp1);
+  Exp* clone2 = arena_zalloc(a, Exp, 1);
+  *clone2 = deep_clone_exp(a, app.exp2);
+  return (Application){.exp1 = clone1, .exp2 = clone2};
+}
+
+Exp deep_clone_exp(Arena a, const Exp* e)
+{
+  assert(e);
+
+  Exp res = {0};
+  res.type = e->type;
+
+  switch (e->type) {
+    case exp_VAR: res.toVar = deep_clone_var(a, e->toVar); break;
+    case exp_ABS: res.toAbs = deep_clone_abs(a, e->toAbs); break;
+    case exp_APP: res.toApp = deep_clone_app(a, e->toApp); break;
+  }
+
+  return res;
+}
+
+bool exp_equal(Exp* e1, Exp* e2)
+{
+  assert(e1 && e2);
+
+  if (e1->type != e2->type) {
+    return false;
+  }
+
+  switch (e1->type) {
+    case exp_VAR: return str_eq(e1->toVar.str, e2->toVar.str);
+    case exp_ABS:
+      return (str_eq(e1->toAbs.var.str, e2->toAbs.var.str) &&
+              exp_equal(e1->toAbs.exp, e2->toAbs.exp));
+    case exp_APP:
+      return (exp_equal(e1->toApp.exp1, e2->toApp.exp1) &&
+              exp_equal(e1->toApp.exp2, e2->toApp.exp2));
+  }
+
+  return false;
+}

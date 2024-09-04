@@ -41,4 +41,11 @@ struct Exp
 
 void print_exp(Exp* exp);
 
+Variable deep_clone_var(Arena a, Variable v);
+Abstraction deep_clone_abs(Arena a, Abstraction abs);
+Application deep_clone_app(Arena a, Application app);
+Exp deep_clone_exp(Arena a, const Exp* e);
+
+bool exp_equal(Exp* e1, Exp* e2);
+
 #endif
