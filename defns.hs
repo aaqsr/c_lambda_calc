@@ -1,0 +1,17 @@
+one = \f x. f x
+plus = \m n f x. m f (n f x)
+multiply = \m n f x. m (n f) x
+true = \t f. t
+false = \t f. f
+if = \c t f. c t f
+zero = \f x. x
+isZero = \n. n (\x. false) true
+pred = \n f x. n (\g h. h (g f)) (\u. x) (\u. u)
+tw = \f x. ((\f x. f x) f ((\f x. f x) f x))
+thre = \f x. ((\m n f x. m f (n f x)) (\f x. f x) (\f x. f x)) f ((\f x. f x) f x)
+two = plus one one
+three = plus two one
+pred = \n f x. n (\g h. h (g f)) (\u. x) (\u. u)
+Y = \f. (\x. f (x x)) (\x. f (x x))
+factorial = Y (\f n. if (isZero n) one (multiply n (f (pred n))))
+fact = (\f.(\x.f (x x)) (\x.f (x x))) (\r.\n.(\c.\t.\f.c t f) ((\n.n (\x.\t.\f.f) \t.\f.t) n) (\f.\x.f x) ((\m.\n.\f.\x.m (n f) x) n (r ((\n.\f.\x. n (\g.\h.h (g f)) (\u.x) (\u.u)) n))))

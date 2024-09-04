@@ -1,6 +1,7 @@
 #ifndef AAQ_ARENA_H_
 #define AAQ_ARENA_H_
 
+#include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
 

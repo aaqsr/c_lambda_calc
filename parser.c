@@ -1,4 +1,6 @@
 #include "parser.h"
+#include "ast.h"
+#include "scanner.h"
 #include <assert.h>
 
 // `term -> [A-Za-z]+`
@@ -111,6 +113,7 @@ parsedTree parse_app(Arena a, token* tks)
 Exp* parse(Arena a, token* tks)
 {
   parsedTree res = parse_app(a, tks);
+  // print_exp(res.res);
   assert(res.leftover == NULL);
   return res.res;
 }

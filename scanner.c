@@ -38,6 +38,7 @@ token* scan(Arena a, const_string str)
         case '(': cur->type = tok_LPAREN; break;
         case ')': cur->type = tok_RPAREN; break;
         case '.': cur->type = tok_DOT; break;
+        case '=': cur->type = tok_EQ; break;
 
         // Ignore
         case ' ': continue;

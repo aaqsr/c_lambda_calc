@@ -107,7 +107,7 @@ void arena_mem_print(Arena a)
 {
   printf("Mem Array:\n");
   for (size_t i = 0; i < a->capacity; ++i) {
-    #pragma clang diagnostic ignored "-Wformat"
+#pragma clang diagnostic ignored "-Wformat"
     printf("  %12lu:  %3hhu\n", &a->data[i], a->data[i]);
 
     // Break every 4 bytes

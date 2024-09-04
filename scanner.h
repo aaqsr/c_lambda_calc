@@ -23,6 +23,7 @@ struct token
     tok_LAMBDA,
     tok_TERM,
     tok_DOT,
+    tok_EQ,
   } type;
 };
 

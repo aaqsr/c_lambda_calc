@@ -39,7 +39,6 @@ struct Exp
   };
 };
 
-void print_exp_helper(Exp* exp);
 void print_exp(Exp* exp);
 
 #endif
