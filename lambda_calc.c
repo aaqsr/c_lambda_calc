@@ -82,7 +82,7 @@ Exp* beta_reduce(Arena a, Exp* abs, Exp* subs)
   return abs->toAbs.exp;
 }
 
-void lazy_interp(Arena a, Exp* ast, context_node* context)
+void lazy_interp(Arena a, Exp* ast, context_list context)
 {
   switch (ast->type) {
     case exp_APP:
@@ -97,17 +97,17 @@ void lazy_interp(Arena a, Exp* ast, context_node* context)
 
     case exp_VAR: {
       Exp* sub = NULL;
-      if ((sub = search_context(context, ast->toVar))) {
+      if ((sub = context_search(context, ast->toVar))) {
         *ast = deep_clone_exp(a, sub);
       }
     } break;
   }
 }
 
-bool isReducible(Exp* e, context_node* ctx)
+bool isReducible(Exp* e, context_list ctx)
 {
   switch (e->type) {
-    case exp_VAR: return (search_context(ctx, e->toVar) != NULL);
+    case exp_VAR: return (context_search(ctx, e->toVar) != NULL);
     case exp_ABS: return (isReducible(e->toAbs.exp, ctx));
     case exp_APP:
       return (e->toApp.exp1->type == exp_ABS ||

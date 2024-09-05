@@ -17,7 +17,11 @@ typedef struct
   size_t size;
 } const_string;
 
-#define EMPTY_STR (string){ ._str = NULL, .size = 0 }
+#define EMPTY_STR                                                              \
+  (string)                                                                     \
+  {                                                                            \
+    ._str = NULL, .size = 0                                                    \
+  }
 
 const_string const_str(string str);
 const_string str_lit(const char* str_literal);
@@ -47,9 +51,16 @@ string str_cat(Arena dest, const_string src1, const_string src2);
 size_t str_print(const_string str);
 size_t str_println(const_string str);
 
+typedef struct
+{
+  string res;
+  // Whether file has ended, or we still have more to read
+  enum { srr_EOF = 0, srr_MORE } status;
+} str_readln_return;
+
 // Reads line from std in into an arena.
 // Unsafe if arena does not have enough space.
-string str_readln_from_file(Arena a, FILE* f);
+str_readln_return str_readln_from_file(Arena a, FILE* f);
 
 bool str_eq(const_string str1, const_string str2);
 

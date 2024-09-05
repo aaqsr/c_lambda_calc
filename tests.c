@@ -42,4 +42,31 @@ void scanner_test(void)
   print_tokens(tokens);
   arena_free(token_arena);
 }
+
+void scanner_parser_print_test(void)
+{
+  Arena input_arena = arena_init();
+  Arena token_arena = arena_init();
+  Arena exp_arena = arena_init();
+
+  const_string main_inp = const_str(str_readln(input_arena));
+  token* main_tokens = scan(token_arena, main_inp);
+  Exp* main_expr = parse(exp_arena, main_tokens);
+
+  print_exp(main_expr);
+
+  // `printf("%d\n", isFreeVar(expressions, (Variable){.str = inp}));`
+  Variable target = (Variable){.str = const_str(str_readln(input_arena))};
+
+  const_string sub_inp = const_str(str_readln(input_arena));
+  token* sub_tokens = scan(token_arena, sub_inp);
+  Exp* substitution = parse(exp_arena, sub_tokens);
+
+  substitute(exp_arena, main_expr, target, substitution);
+  print_exp(main_expr);
+
+  arena_free(input_arena);
+  arena_free(exp_arena);
+  arena_free(token_arena);
+}
 */

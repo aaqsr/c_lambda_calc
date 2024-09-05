@@ -12,8 +12,18 @@ struct context_node
   context_node* nxt;
 };
 
-Exp* search_context(context_node* context, Variable var);
+typedef struct
+{
+  context_node* head;
+  context_node* tail;
+} context_list;
 
-void print_context(context_node* context);
+Exp* context_search(context_list context_list, Variable var);
+
+void context_print(context_list context_list);
+
+context_list context_from_file(Arena context_arena, FILE* f);
+
+context_list context_push_back(Arena context_arena, context_list lst, Variable new, Exp* exp);
 
 #endif

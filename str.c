@@ -99,13 +99,17 @@ size_t str_println(const const_string str)
   return res;
 }
 
-string str_readln_from_file(Arena a, FILE* f)
+str_readln_return str_readln_from_file(Arena a, FILE* f)
 {
-  string res = EMPTY_STR;
+  str_readln_return res = {.res = EMPTY_STR, .status = srr_EOF};
 
   int c;
   for (c = getc(f); c != EOF && c != '\n'; c = getc(f)) {
-    res = str_cat(a, const_str(res), str_from_char((char*)&c));
+    res.res = str_cat(a, const_str(res.res), str_from_char((char*)&c));
+  }
+
+  if (c == '\n') {
+    res.status = srr_MORE;
   }
 
   return res;
